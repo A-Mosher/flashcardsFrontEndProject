@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import TitleBar from './TitleBar/titleBar';
+import CardViewer from './CardViewer/cardViewer';
 
 class App extends Component {
     constructor(props) {
@@ -63,17 +64,6 @@ class App extends Component {
         }
     }
 
-    // goToNextCard(){
-    //     let tempCardNumber = this.state.cardNumber;
-    //     tempCardNumber++;
-    //     if(tempCardNumber === this.collection.length + 1){
-    //         tempCardNumber = 0;
-    //     }
-    //     this.setState({
-    //         cardNumber: tempCardNumber
-    //     });
-    // }
-
     goToPreviousCard(){
         if(this.state.cardNumber > 0){
             this.setState({
@@ -91,18 +81,12 @@ class App extends Component {
         return (
             <div className="container-fluid">
                 <TitleBar />
-                <div className="row row-spacer">
-                    <div className="col">
-                    <button onClick={() => this.goToPreviousCard()}>Previous Card</button>
-                    </div>
-                    <div className="col">
-                        <h1>{this.collection[this.state.collectionNumber].title}</h1>
-                        <h4>{this.collection[this.state.collectionNumber].cards[this.state.cardNumber].question}</h4>
-                    </div>
-                    <div className="col">
-                        <button onClick={() => this.goToNextCard()}>Next Card</button>
-                    </div>
-                </div>
+                <CardViewer 
+                    title={this.collection[this.state.collectionNumber].title}
+                    question={this.collection[this.state.collectionNumber].cards[this.state.cardNumber].question} 
+                    answer={this.collection[this.state.collectionNumber].cards[this.state.cardNumber].answer} 
+                    nextCard={() => this.goToNextCard()} 
+                    previousCard={() => this.goToPreviousCard()}/>
             </div>
         );
     }
