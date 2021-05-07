@@ -48,18 +48,34 @@ class App extends Component {
         this.state = {
             collectionNumber: 0,
             cardNumber: 0,
-        } 
+            questionToAnswer: this.collection[this.state.collectionNumber].cards[this.state.cardNumber].question
+        }
+    }
+    
+    showAnswer = () =>{
+        let questionToAnswer = this.collection[this.state.collectionNumber].cards[this.state.cardNumber].question;
+
+        if(this.state.questionToAnswer === questionToAnswer){
+            this.setState({
+                questionToAnswer: this.collection[this.state.collectionNumber].cards[this.state.cardNumber].answer,
+            });
+        }
+        else{
+            this.setState({
+                questionToAnswer: this.collection[this.state.collectionNumber].cards[this.state.cardNumber].question
+            });
+        }
     }
 
     goToNextCard = () =>{
         if(this.state.cardNumber < this.collection[this.state.collectionNumber].cards.length - 1){
             this.setState({
-                cardNumber: this.state.cardNumber + 1,
+                cardNumber: this.state.cardNumber + 1
             });
         }
         else{
             this.setState({
-                cardNumber: 0,
+                cardNumber: 0
             });
         }
     }
@@ -67,12 +83,12 @@ class App extends Component {
     goToPreviousCard(){
         if(this.state.cardNumber > 0){
             this.setState({
-                cardNumber: this.state.cardNumber - 1,
+                cardNumber: this.state.cardNumber - 1
             });
         }
         else{
             this.setState({
-                cardNumber: this.collection[this.state.collectionNumber].cards.length-1,
+                cardNumber: this.collection[this.state.collectionNumber].cards.length-1
             });
         }
     }
@@ -83,10 +99,11 @@ class App extends Component {
                 <TitleBar />
                 <CardViewer 
                     title={this.collection[this.state.collectionNumber].title}
-                    question={this.collection[this.state.collectionNumber].cards[this.state.cardNumber].question} 
+                    display={this.state.questionToAnswer} 
                     answer={this.collection[this.state.collectionNumber].cards[this.state.cardNumber].answer} 
                     nextCard={() => this.goToNextCard()} 
-                    previousCard={() => this.goToPreviousCard()}/>
+                    previousCard={() => this.goToPreviousCard()}
+                    revealAnswer={() => this.showAnswer()}/>
             </div>
         );
     }
