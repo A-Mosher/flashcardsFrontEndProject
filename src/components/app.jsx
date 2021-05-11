@@ -42,27 +42,43 @@ class App extends Component {
                     answer: 'Water, Malt, Hops, Yeast',
                 },
             ]
-            },
+            }
         ];
 
         this.state = {
             collectionNumber: 0,
             cardNumber: 0,
-            questionToAnswer: this.collection[this.state.collectionNumber].cards[this.state.cardNumber].question
+            cardDisplay: null
         }
+        
+        this.showAnswer = this.showAnswer.bind(this);
+        this.goToNextCard = this.goToNextCard.bind(this);
+        this.goToPreviousCard = this.goToPreviousCard.bind(this);
+
+    }
+
+    handleOnClick(event) {
+        event.preventDefault();
+    }
+
+
+    componentDidMount(){
+        this.setState({
+            cardDisplay: this.collection[this.state.collectionNumber].cards[this.state.cardNumber].question
+        });
     }
     
     showAnswer = () =>{
-        let questionToAnswer = this.collection[this.state.collectionNumber].cards[this.state.cardNumber].question;
+        let cardDisplay = this.collection[this.state.collectionNumber].cards[this.state.cardNumber].question;
 
-        if(this.state.questionToAnswer === questionToAnswer){
+        if(this.state.cardDisplay === cardDisplay){
             this.setState({
-                questionToAnswer: this.collection[this.state.collectionNumber].cards[this.state.cardNumber].answer,
+                cardDisplay: this.collection[this.state.collectionNumber].cards[this.state.cardNumber].answer,
             });
         }
         else{
             this.setState({
-                questionToAnswer: this.collection[this.state.collectionNumber].cards[this.state.cardNumber].question
+                cardDisplay: this.collection[this.state.collectionNumber].cards[this.state.cardNumber].question
             });
         }
     }
@@ -72,15 +88,17 @@ class App extends Component {
             this.setState({
                 cardNumber: this.state.cardNumber + 1
             });
+            this.forceUpdate();
         }
         else{
             this.setState({
                 cardNumber: 0
             });
+            this.forceUpdate();
         }
     }
 
-    goToPreviousCard(){
+    goToPreviousCard = () =>{
         if(this.state.cardNumber > 0){
             this.setState({
                 cardNumber: this.state.cardNumber - 1
@@ -99,11 +117,12 @@ class App extends Component {
                 <TitleBar />
                 <CardViewer 
                     title={this.collection[this.state.collectionNumber].title}
-                    display={this.state.questionToAnswer} 
+                    display={this.state.cardDisplay} 
                     answer={this.collection[this.state.collectionNumber].cards[this.state.cardNumber].answer} 
                     nextCard={() => this.goToNextCard()} 
                     previousCard={() => this.goToPreviousCard()}
-                    revealAnswer={() => this.showAnswer()}/>
+                    revealAnswer={() => this.showAnswer()}
+                    handleTheClick={() => this.handleOnClick()}/>
             </div>
         );
     }

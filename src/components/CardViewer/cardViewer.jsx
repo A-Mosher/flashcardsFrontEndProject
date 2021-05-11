@@ -6,13 +6,14 @@ function CardViewer(props){
 
         <div className="row row-spacer">
             <div className="col">
-                <button onClick={() => props.previousCard()}>Previous Card</button>
+                <button onClick={props.handleTheClick()}>Previous Card</button>
+                <div>{() => props.previousCard()}</div>
             </div>
 
              <div className="col-a">
                  <h1>{props.title}</h1>
                 <h4>{props.display}</h4>
-                <button onClick={() => props.revealAnswer()}>Answer</button>
+                <button onClick={() => props.revealAnswer()}>Flip Card</button>
             </div>
             <div className="col">
                 <button onClick={() => props.nextCard()}>Next Card</button>
