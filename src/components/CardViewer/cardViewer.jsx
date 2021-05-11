@@ -6,8 +6,7 @@ function CardViewer(props){
 
         <div className="row row-spacer">
             <div className="col">
-                <button onClick={props.handleTheClick()}>Previous Card</button>
-                <div>{() => props.previousCard()}</div>
+                <button onClick={() => props.previousCard()}>Previous Card</button>
             </div>
 
              <div className="col-a">

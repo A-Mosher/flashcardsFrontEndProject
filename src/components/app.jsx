@@ -20,7 +20,7 @@ class App extends Component {
                 {
                     category: 'Marvel',
                     question: 'What type of doctor is Stephen Strange?',
-                    answer: 'Neurosurgeon',
+                    answer: 'Neurosurgeon'
                 },
             ]
             },
@@ -34,12 +34,12 @@ class App extends Component {
                 {
                     category: 'Beer',
                     question: 'What does IPA stand for?',
-                    answer: 'India Pale Ale',
+                    answer: 'India Pale Ale'
                 },
                 {
                     category: 'Beer',
                     question: 'what are the 4 ingredients necessary for brewing beer?',
-                    answer: 'Water, Malt, Hops, Yeast',
+                    answer: 'Water, Malt, Hops, Yeast'
                 },
             ]
             }
@@ -55,10 +55,6 @@ class App extends Component {
         this.goToNextCard = this.goToNextCard.bind(this);
         this.goToPreviousCard = this.goToPreviousCard.bind(this);
 
-    }
-
-    handleOnClick(event) {
-        event.preventDefault();
     }
 
 
@@ -83,18 +79,28 @@ class App extends Component {
         }
     }
 
+    reRender = () =>{
+    
+            this.setState({
+                cardDisplay: this.collection[this.state.collectionNumber].cards[this.state.cardNumber].question
+            });
+        
+    }
+
+
     goToNextCard = () =>{
-        if(this.state.cardNumber < this.collection[this.state.collectionNumber].cards.length - 1){
+        if(this.state.cardNumber < this.collection[this.state.collectionNumber].cards.length){
             this.setState({
                 cardNumber: this.state.cardNumber + 1
             });
-            this.forceUpdate();
+            console.log(this.state.cardNumber)
+            this.reRender()
+
         }
         else{
             this.setState({
                 cardNumber: 0
             });
-            this.forceUpdate();
         }
     }
 
@@ -118,11 +124,9 @@ class App extends Component {
                 <CardViewer 
                     title={this.collection[this.state.collectionNumber].title}
                     display={this.state.cardDisplay} 
-                    answer={this.collection[this.state.collectionNumber].cards[this.state.cardNumber].answer} 
                     nextCard={() => this.goToNextCard()} 
                     previousCard={() => this.goToPreviousCard()}
-                    revealAnswer={() => this.showAnswer()}
-                    handleTheClick={() => this.handleOnClick()}/>
+                    revealAnswer={() => this.showAnswer()}/>
             </div>
         );
     }
